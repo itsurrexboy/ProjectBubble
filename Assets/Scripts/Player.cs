@@ -4,15 +4,19 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public GameObject bubblePrefab;
+    public float shootForce = 5f;
 
-    // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetMouseButtonDown(0))
+        {
+            Vector3 mousePos = Input.mousePosition;
+            mousePos = Camera.main.ScreenToWorldPoint(mousePos);
+            Vector2 direction = (mousePos - transform.position).normalized;
+
+            GameObject bubble = Instantiate(bubblePrefab, transform.position, Quaternion.identity);
+            bubble.GetComponent<Rigidbody2D>().AddForce(direction * shootForce, ForceMode2D.Impulse);
+        }
     }
 }
